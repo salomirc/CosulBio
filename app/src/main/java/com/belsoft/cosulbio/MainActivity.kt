@@ -17,13 +17,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.get
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme_NoActionBar)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -42,11 +44,11 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        val header = navView.getHeaderView(0)
-        val userNameTextView = header.findViewById<TextView>(R.id.userNameTextView)
-        val mailAdressTextView = header.findViewById<TextView>(R.id.mailAdressTextView)
-        userNameTextView.text = "Ciprian Salomir"
-        mailAdressTextView.text = "ciprian.salomir@gmail.com"
+//        val header = navView.getHeaderView(0)
+//        val userNameTextView = header.findViewById<TextView>(R.id.userNameTextView)
+//        val mailAdressTextView = header.findViewById<TextView>(R.id.mailAdressTextView)
+//        userNameTextView.text = "Ciprian Salomir"
+//        mailAdressTextView.text = "ciprian.salomir@gmail.com"
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
