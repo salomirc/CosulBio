@@ -7,4 +7,9 @@ interface IDbRepository {
     fun getQuotes(): List<User>
 
     fun findById(id: Long): User
+
+    fun deleteUser(user: User)
+
+    fun deleteAllUsers()
+
 }

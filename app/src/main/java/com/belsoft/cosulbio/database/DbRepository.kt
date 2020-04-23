@@ -4,18 +4,26 @@ import android.content.Context
 
 class DbRepository private constructor(appContext: Context): IDbRepository {
 
-    private val quoteDao: QuoteDao = RoomDatabaseApp.getInstance(appContext).quoteDao()
+    private val userDao: UserDao = RoomDatabaseApp.getInstance(appContext).userDao()
 
     override fun addQuote(quote: User): Long {
-        return quoteDao.addQuote(quote)
+        return userDao.addUser(quote)
     }
 
     override fun getQuotes(): List<User> {
-        return quoteDao.getQuotes()
+        return userDao.getUsers()
     }
 
     override fun findById(id: Long): User {
-        return quoteDao.findById(id)
+        return userDao.findUserById(id)
+    }
+
+    override fun deleteUser(user: User) {
+        return userDao.deleteUser(user)
+    }
+
+    override fun deleteAllUsers() {
+        return userDao.deleteAllUsers()
     }
 
     companion object {

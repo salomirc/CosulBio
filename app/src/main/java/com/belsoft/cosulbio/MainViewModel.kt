@@ -5,10 +5,7 @@ import com.belsoft.cosulbio.components.SingleLiveEvent
 import com.belsoft.cosulbio.database.IDbRepository
 import com.belsoft.cosulbio.services.IRequestHelper
 
-class MainViewModel(val requestHelper: IRequestHelper, val dbRepository: IDbRepository) : ViewModel() {
-
-    val toastMessage = SingleLiveEvent<Int?>()
-    val singleLiveEvent = SingleLiveEvent<Unit>()
+class MainViewModel(val requestHelper: IRequestHelper, val dbRepository: IDbRepository) : BaseViewModel() {
 
 //    var dontKnowPumpsList = mutableListOf<DontKnowPumpItemModel>()
 

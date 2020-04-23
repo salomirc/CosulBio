@@ -5,6 +5,7 @@ import com.belsoft.cosulbio.MainViewModel
 import com.belsoft.cosulbio.database.DbRepository
 import com.belsoft.cosulbio.services.IRequestHelper
 import com.belsoft.cosulbio.services.RequestHelper
+import com.belsoft.cosulbio.ui.login.LoginViewModel
 
 object InjectorUtils {
 
@@ -13,5 +14,9 @@ object InjectorUtils {
 
     fun provideMainViewModelFactory(): ViewModelFactory<MainViewModel> {
         return ViewModelFactory(MainViewModel(requestHelper, dbRepository))
+    }
+
+    fun provideLoginViewModelFactory(): ViewModelFactory<LoginViewModel> {
+        return ViewModelFactory(LoginViewModel(requestHelper, dbRepository))
     }
 }
