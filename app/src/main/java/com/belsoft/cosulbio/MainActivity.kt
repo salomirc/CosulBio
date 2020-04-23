@@ -2,8 +2,6 @@ package com.belsoft.cosulbio
 
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
-import android.widget.TextView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -13,9 +11,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.get
 
 class MainActivity : BaseActivity() {
 
@@ -40,9 +36,14 @@ class MainActivity : BaseActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_myaccount), drawerLayout)
+                R.id.homeFragment,R.id.cosulMeuFragment , R.id.myOrdersFragment, R.id.loginFragment, R.id.logoutFragment), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        //Hide Logout menu item
+//        val menu = navView.menu
+//        val logoutItem = menu.findItem(R.id.logoutFragment)
+//        logoutItem.isVisible = false
 
 //        val header = navView.getHeaderView(0)
 //        val userNameTextView = header.findViewById<TextView>(R.id.userNameTextView)

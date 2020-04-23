@@ -3,21 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/nav_home">
-
+    app:startDestination="@id/homeFragment">
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/homeFragment"
         android:name="com.belsoft.cosulbio.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.belsoft.cosulbio.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/myOrdersFragment"
+        android:name="com.belsoft.cosulbio.ui.orders.MyOrdersFragment"
+        android:label="@string/my_orders_fragment"
+        tools:layout="@layout/my_orders_fragment" />
     <fragment
-        android:id="@+id/nav_myaccount"
-        android:name="com.belsoft.cosulbio.ui.slideshow.MyAccountFragment"
-        android:label="@string/menu_myaccount"
-        tools:layout="@layout/fragment_myaccount" />
+        android:id="@+id/loginFragment"
+        android:name="com.belsoft.cosulbio.ui.login.LoginFragment"
+        android:label="@string/login"
+        tools:layout="@layout/login_fragment" />
+    <fragment
+        android:id="@+id/logoutFragment"
+        android:name="com.belsoft.cosulbio.ui.logout.LogoutFragment"
+        android:label="@string/logout"
+        tools:layout="@layout/logout_fragment" />
+    <fragment
+        android:id="@+id/cosulMeuFragment"
+        android:name="com.belsoft.cosulbio.ui.cosul.CosulMeuFragment"
+        android:label="@string/cosul_meu"
+        tools:layout="@layout/cosul_meu_fragment" />
 </navigation>
