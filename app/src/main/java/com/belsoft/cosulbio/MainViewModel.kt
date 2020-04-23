@@ -2,9 +2,10 @@ package com.belsoft.cosulbio
 
 import androidx.lifecycle.ViewModel
 import com.belsoft.cosulbio.components.SingleLiveEvent
+import com.belsoft.cosulbio.database.IDbRepository
 import com.belsoft.cosulbio.services.IRequestHelper
 
-class MainViewModel(val requestHelper: IRequestHelper) : ViewModel() {
+class MainViewModel(val requestHelper: IRequestHelper, val dbRepository: IDbRepository) : ViewModel() {
 
     val toastMessage = SingleLiveEvent<Int?>()
     val singleLiveEvent = SingleLiveEvent<Unit>()
