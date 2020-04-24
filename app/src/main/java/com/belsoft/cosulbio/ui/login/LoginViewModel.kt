@@ -10,8 +10,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class LoginViewModel(val dbRepository: IDbRepository,
-                     val requestHelper: IRequestHelper) : BaseViewModel() {
+class LoginViewModel(
+    private val dbRepository: IDbRepository,
+    private val requestHelper: IRequestHelper) : BaseViewModel() {
 
     init {
         viewModelScope.launch {
