@@ -3,20 +3,25 @@ package com.belsoft.cosulbio.utils
 import com.belsoft.cosulbio.MainActivity
 import com.belsoft.cosulbio.MainViewModel
 import com.belsoft.cosulbio.database.DbRepository
+import com.belsoft.cosulbio.database.IDbRepository
 import com.belsoft.cosulbio.services.IRequestHelper
 import com.belsoft.cosulbio.services.RequestHelper
 import com.belsoft.cosulbio.ui.login.LoginViewModel
 
 object InjectorUtils {
 
-    private val dbRepository: DbRepository = DbRepository.getInstance(MainActivity.appContext)
-    private val requestHelper: IRequestHelper = RequestHelper.getInstance(MainActivity.appContext)
+    private val dbRepository = DbRepository.getInstance(MainActivity.appContext)
+    private val requestHelper = RequestHelper.getInstance(MainActivity.appContext)
 
     fun provideMainViewModelFactory(): ViewModelFactory<MainViewModel> {
-        return ViewModelFactory(MainViewModel(requestHelper, dbRepository))
+        return ViewModelFactory {
+            MainViewModel(dbRepository, requestHelper)
+        }
     }
 
-    fun provideLoginViewModelFactory(mainViewModel: MainViewModel): ViewModelFactory<LoginViewModel> {
-        return ViewModelFactory(LoginViewModel(requestHelper, dbRepository, mainViewModel))
+    fun provideLoginViewModelFactory(): ViewModelFactory<LoginViewModel> {
+        return ViewModelFactory {
+            LoginViewModel(dbRepository, requestHelper)
+        }
     }
 }

@@ -5,7 +5,7 @@ import com.belsoft.cosulbio.components.SingleLiveEvent
 import com.belsoft.cosulbio.database.IDbRepository
 import com.belsoft.cosulbio.services.IRequestHelper
 
-class MainViewModel(val requestHelper: IRequestHelper, val dbRepository: IDbRepository) : BaseViewModel() {
+class MainViewModel(val dbRepository: IDbRepository, val requestHelper: IRequestHelper) : BaseViewModel() {
 
 //    var dontKnowPumpsList = mutableListOf<DontKnowPumpItemModel>()
 
