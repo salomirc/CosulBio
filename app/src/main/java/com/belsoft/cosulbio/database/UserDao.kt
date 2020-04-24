@@ -11,7 +11,7 @@ interface UserDao {
     @Query("SELECT * FROM users_table WHERE id LIKE :id LIMIT 1")
     fun findUserById(id: Long): User
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     fun addUser(user: User): Long
 
     @Delete

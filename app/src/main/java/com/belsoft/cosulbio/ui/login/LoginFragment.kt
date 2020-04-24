@@ -33,14 +33,12 @@ class LoginFragment : BaseFragment() {
 
     private fun setArchitectureComponents() {
         // Get the QuotesViewModelFactory with all of it's dependencies constructed
-        val factory = InjectorUtils.provideLoginViewModelFactory()
+        val factory = InjectorUtils.provideLoginViewModelFactory(mainViewModel)
 
         // Use ViewModelProviders class to create / get already created QuotesViewModel
         // for this view (activity)
         viewModel = ViewModelProvider(this, factory)
             .get(LoginViewModel::class.java)
-
-        viewModel.mainViewModel = mainViewModel
 
         // Inflate view and obtain an instance of the binding class.
         val binding: LoginFragmentBinding = LoginFragmentBinding.bind(fgmView)
@@ -53,7 +51,7 @@ class LoginFragment : BaseFragment() {
     }
 
     private fun initializeUI() {
-        viewModel.displayToast(R.string.login)
+
     }
 
 }

@@ -16,7 +16,7 @@ object InjectorUtils {
         return ViewModelFactory(MainViewModel(requestHelper, dbRepository))
     }
 
-    fun provideLoginViewModelFactory(): ViewModelFactory<LoginViewModel> {
-        return ViewModelFactory(LoginViewModel(requestHelper, dbRepository))
+    fun provideLoginViewModelFactory(mainViewModel: MainViewModel): ViewModelFactory<LoginViewModel> {
+        return ViewModelFactory(LoginViewModel(requestHelper, dbRepository, mainViewModel))
     }
 }
