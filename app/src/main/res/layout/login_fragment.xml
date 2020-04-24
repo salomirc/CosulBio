@@ -24,7 +24,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="User" />
+            tools:text="@{viewmodel.userInfo}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

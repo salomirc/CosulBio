@@ -21,8 +21,8 @@ data class User(
     @ColumnInfo(name = "email")
     val email: String,
 
-//    @ColumnInfo(name = "is_admin")
-//    val isAdmin: Boolean,
+    @ColumnInfo(name = "is_admin")
+    val isAdmin: Boolean,
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 
 // Annotates class to be a Room Database with a table (entity) of the Word class
-@Database(entities = [User::class],version = 1)
+@Database(entities = [User::class],version = 2)
 abstract class RoomDatabaseApp : RoomDatabase() {
 
     abstract fun userDao(): UserDao

@@ -2,11 +2,13 @@ package com.belsoft.cosulbio.database
 
 interface IDbRepository {
 
-    fun addQuote(quote: User): Long
+    fun addUser(user: User): Long
 
-    fun getQuotes(): List<User>
+    fun getUsers(): List<User>
 
-    fun findById(id: Long): User
+    fun findUserById(id: Long): User
+
+    fun findUserByUsernameAndPassword(username: String, password: String): User?
 
     fun deleteUser(user: User)
 

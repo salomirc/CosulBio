@@ -6,16 +6,20 @@ class DbRepository private constructor(appContext: Context): IDbRepository {
 
     private val userDao: UserDao = RoomDatabaseApp.getInstance(appContext).userDao()
 
-    override fun addQuote(quote: User): Long {
-        return userDao.addUser(quote)
+    override fun addUser(user: User): Long {
+        return userDao.addUser(user)
     }
 
-    override fun getQuotes(): List<User> {
+    override fun getUsers(): List<User> {
         return userDao.getUsers()
     }
 
-    override fun findById(id: Long): User {
+    override fun findUserById(id: Long): User {
         return userDao.findUserById(id)
+    }
+
+    override fun findUserByUsernameAndPassword(username: String, password: String): User? {
+        return userDao.findUserByUsernameAndPassword(username, password)
     }
 
     override fun deleteUser(user: User) {

@@ -5,6 +5,5 @@ import com.belsoft.cosulbio.components.SingleLiveEvent
 
 open class BaseViewModel: ViewModel() {
 
-    val toastMessage = SingleLiveEvent<Int?>()
-    val singleLiveEvent = SingleLiveEvent<Unit>()
+    val toastMessage = SingleLiveEvent<Int>()
 }
