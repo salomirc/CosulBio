@@ -16,7 +16,7 @@ class LoginViewModel(
 
     init {
         viewModelScope.launch {
-            addUserToDb()
+//            addUserToDb()
         }
     }
 
@@ -29,11 +29,11 @@ class LoginViewModel(
             "ciprian.salomir@gmail.com",
             false
         )
-        val findedUsers = withContext(Dispatchers.IO) {
+        val users = withContext(Dispatchers.IO) {
             dbRepository.addUser(user)
             dbRepository.getUsers()
         }
-        findedUsers.let {
+        users.let {
             userInfo.value = it.toString()
             println()
         }

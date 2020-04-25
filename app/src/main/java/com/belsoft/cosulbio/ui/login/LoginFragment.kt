@@ -1,16 +1,12 @@
 package com.belsoft.cosulbio.ui.login
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.belsoft.cosulbio.BaseFragment
-import com.belsoft.cosulbio.MainViewModel
-
 import com.belsoft.cosulbio.R
 import com.belsoft.cosulbio.databinding.LoginFragmentBinding
 import com.belsoft.cosulbio.utils.InjectorUtils

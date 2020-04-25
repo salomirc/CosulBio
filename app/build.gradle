@@ -101,7 +101,4 @@ dependencies {
     // ViewModel Kotlin support
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-
-//    //Katana dependency injection
-//    implementation 'org.rewedigital.katana:katana-android:1.13.1'
 }
