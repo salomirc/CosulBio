@@ -92,6 +92,9 @@ class LoginFragment : BaseFragment() {
             MainActivity.showSoftKeyboard(view)
             delay(200)
         }
+        else{
+            view.requestFocus()
+        }
     }
 
 }
