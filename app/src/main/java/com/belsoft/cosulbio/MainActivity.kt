@@ -35,6 +35,7 @@ class MainActivity : BaseActivity(), IRootView {
         lateinit var appContext: Context
         lateinit var isKeyboardOnScreen: () -> Boolean
         lateinit var hideSoftKeyboard: (View) -> Unit
+        lateinit var showSoftKeyboard: (View) -> Unit
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +57,14 @@ class MainActivity : BaseActivity(), IRootView {
         hideSoftKeyboard = { view: View ->
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+        }
+
+        showSoftKeyboard = { view: View ->
+            val hasFocus =  if (view.hasFocus()) true else view.requestFocus()
+            if (hasFocus) {
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+            }
         }
 
         //SingleEvent received from ViewModel

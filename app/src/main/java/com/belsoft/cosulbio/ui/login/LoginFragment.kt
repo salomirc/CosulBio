@@ -7,9 +7,13 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.belsoft.cosulbio.BaseFragment
+import com.belsoft.cosulbio.MainActivity
 import com.belsoft.cosulbio.R
 import com.belsoft.cosulbio.databinding.LoginFragmentBinding
 import com.belsoft.cosulbio.utils.InjectorUtils
+import kotlinx.android.synthetic.main.login_fragment.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class LoginFragment : BaseFragment() {
 
@@ -55,6 +59,39 @@ class LoginFragment : BaseFragment() {
                 mainViewModel.toastMessage.value = it
             }
         })
+
+        loginButton.setOnClickListener {
+            if (isRunning) return@setOnClickListener
+            isRunning = true
+
+            localScope.launch {
+                when {
+                    usernameEditText.text.toString().isBlank() -> {
+                        showLeyboardSafe(usernameEditText)
+                    }
+                    passwordEditText.text.toString().isBlank() -> {
+                        showLeyboardSafe(passwordEditText)
+                    }
+                    else -> {
+                        if (MainActivity.isKeyboardOnScreen()){
+                            MainActivity.hideSoftKeyboard(rootLayout.findFocus())
+                            rootLayout.findFocus().clearFocus()
+                        }
+                        viewModel.isVisibleSearchSelectProgessBar.value = true
+                        delay(2000)
+                        viewModel.isVisibleSearchSelectProgessBar.value = false
+                    }
+                }
+                isRunning = false
+            }
+        }
+    }
+
+    private suspend fun showLeyboardSafe(view: View) {
+        if (!MainActivity.isKeyboardOnScreen()) {
+            MainActivity.showSoftKeyboard(view)
+            delay(200)
+        }
     }
 
 }

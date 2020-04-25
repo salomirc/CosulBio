@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#247627</color>
-    <color name="colorPrimaryDark">#00522C</color>
+    <color name="colorPrimary">#4CAF50</color>
+    <color name="colorPrimaryDark">#217325</color>
     <color name="colorAccent">#E91E63</color>
+    <color name="colorPaleteBej">#DAD6CA</color>
+    <color name="colorPaleteMaron">#7A7A7A</color>
+    <color name="colorPaleteMaronDark">#515151</color>
+    <color name="colorGrayLight">#B8B8B8</color>
     <color name="splash_background">#ebebeb</color>
 
-    <color name="standard_button_normal">@color/colorPrimary</color>
-    <color name="standard_button_pressed">@color/colorPrimaryDark</color>
+    <color name="standard_button_normal">@color/colorPaleteMaron</color>
+    <color name="standard_button_pressed">@color/colorPaleteMaronDark</color>
     <color name="standard_button_disabled">#D5D6D8</color>
 </resources>
