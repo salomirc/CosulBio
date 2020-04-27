@@ -7,5 +7,5 @@ import com.belsoft.cosulbio.components.SingleLiveEvent
 open class BaseViewModel: ViewModel() {
 
     val toastMessage = SingleLiveEvent<Int>()
-    val isVisibleSearchSelectProgessBar = MutableLiveData<Boolean>().apply { value = false }
+    val isVisibleSearchSelectProgessBar = MutableLiveData<Boolean>().apply { value = false}
 }

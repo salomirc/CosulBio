@@ -28,8 +28,8 @@ abstract class BaseFragment : Fragment() {
             .get(MainViewModel::class.java)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onPause() {
+        super.onPause()
         localScope.cancel()
     }
 }

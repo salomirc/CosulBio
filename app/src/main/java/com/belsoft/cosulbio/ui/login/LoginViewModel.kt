@@ -44,8 +44,5 @@ class LoginViewModel(
     }
 
     val userInfo = MutableLiveData<String>()
-
-    var loginList = mutableListOf<FormItemModel>()
-    val logins = MutableLiveData<List<FormItemModel>>().apply { value = loginList }
     val isLoginButtonEnabled = MutableLiveData<Boolean>().apply { value = false }
 }
