@@ -19,8 +19,10 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.belsoft.cosulbio.databinding.ActivityMainBinding
 import com.belsoft.cosulbio.interfaces.IRootView
 import com.belsoft.cosulbio.utils.InjectorUtils
 import kotlinx.android.synthetic.main.content_main.*
@@ -41,7 +43,6 @@ class MainActivity : BaseActivity(), IRootView {
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme_NoActionBar)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         setApplicationContext()
         setArchitectureComponents()
         setActivityComponents()
@@ -86,13 +87,20 @@ class MainActivity : BaseActivity(), IRootView {
     }
 
     private fun setArchitectureComponents() {
-        // Get the QuotesViewModelFactory with all of it's dependencies constructed
+        // Get the ViewModelFactory with all of it's dependencies constructed
         val factory = InjectorUtils.provideMainViewModelFactory()
 
-        // Use ViewModelProviders class to create / get already created QuotesViewModel
-        // for this view (activity)
-        viewModel = ViewModelProvider(this, factory)
-            .get(MainViewModel::class.java)
+        // Obtain the ViewModel component.
+        viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+
+        // Inflate view and obtain an instance of the binding class.
+        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        // Specify the current activity as the lifecycle owner.
+        binding.lifecycleOwner = this
+
+        // Assign the component to a property in the binding class.
+        binding.viewmodel = viewModel
     }
 
     private fun displayToastMessage(context: Context, message: String) {

@@ -8,10 +8,8 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
 </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/rootLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF"
         android:focusableInTouchMode="true"
         tools:context=".ui.login.LoginFragment">
 
@@ -46,17 +44,13 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             android:id="@+id/imageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="32dp"
             android:background="@android:drawable/toast_frame"
             android:backgroundTint="#EEEEEE"
             android:contentDescription="@string/Login"
             android:tint="#9C9C9C"
             app:layout_constraintBottom_toTopOf="@+id/recyclerView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
@@ -86,15 +80,15 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/standard_button_bg_states"
+            android:enabled="@{viewmodel.isLoginButtonEnabled}"
             android:text="@string/Login"
             android:textColor="@android:color/background_light"
             android:textSize="18sp"
-            android:enabled="@{viewmodel.isLoginButtonEnabled}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+            app:layout_constraintTop_toTopOf="@+id/guideline2"
             app:layout_constraintVertical_bias="0.0" />
 
         <FrameLayout
@@ -124,14 +118,14 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.3283582" />
+            app:layout_constraintGuide_percent="0.3" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.4941957" />
+            app:layout_constraintGuide_percent="0.46434495" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

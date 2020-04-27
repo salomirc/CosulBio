@@ -113,9 +113,8 @@ class LoginFragment : BaseFragment() {
 
         if (viewModel.loginList.size == 0){
             viewModel.loginList =  itemList
+            viewModel.logins.value = viewModel.loginList
         }
-
-        viewModel.logins.value = viewModel.loginList
     }
 
 //    private suspend fun showLeyboardSafe(view: View) {

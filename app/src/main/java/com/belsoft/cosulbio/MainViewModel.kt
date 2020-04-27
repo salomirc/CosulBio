@@ -1,5 +1,6 @@
 package com.belsoft.cosulbio
 
+import androidx.lifecycle.MutableLiveData
 import com.belsoft.cosulbio.components.SingleLiveEvent
 import com.belsoft.cosulbio.database.IDbRepository
 import com.belsoft.cosulbio.services.IRequestHelper
@@ -9,5 +10,5 @@ class MainViewModel(
     private val requestHelper: IRequestHelper) : BaseViewModel() {
 
     val singleLiveEvent = SingleLiveEvent<Unit>()
-
+    val isFabButtonEnabled = MutableLiveData<Boolean>().apply { value = false }
 }
