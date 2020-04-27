@@ -4,20 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.belsoft.cosulbio.BaseFragment
 import com.belsoft.cosulbio.MainActivity
 import com.belsoft.cosulbio.R
 import com.belsoft.cosulbio.databinding.LoginFragmentBinding
+import com.belsoft.cosulbio.models.LoginFormItemModel
 import com.belsoft.cosulbio.utils.InjectorUtils
 import kotlinx.android.synthetic.main.login_fragment.*
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class LoginFragment : BaseFragment() {
 
     private lateinit var viewModel: LoginViewModel
+    private lateinit var loginEditTextList: List<EditText>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -60,43 +64,42 @@ class LoginFragment : BaseFragment() {
             }
         })
 
+        val loginItemList = mutableListOf(
+            LoginFormItemModel(requireContext().getString(R.string.username)),
+            LoginFormItemModel(requireContext().getString(R.string.password))
+        )
+
+        if (viewModel.loginList.isEmpty()){
+            viewModel.loginList = loginItemList
+            viewModel.logins.value = viewModel.loginList
+        }
+
+        loginEditTextList = listOf(usernameEditText, passwordEditText)
+        for (item in loginEditTextList){
+            item.doAfterTextChanged {
+                viewModel.validateLoginField(it.toString(), loginEditTextList.indexOf(item))
+            }
+        }
+
         loginButton.setOnClickListener {
             if (isRunning) return@setOnClickListener
             isRunning = true
 
-            localScope.launch {
-                when {
-                    usernameEditText.text.toString().isBlank() -> {
-                        showKeyboardSafe(usernameEditText)
-                    }
-                    passwordEditText.text.toString().isBlank() -> {
-                        showKeyboardSafe(passwordEditText)
-                    }
-                    else -> {
-                        if (MainActivity.isKeyboardOnScreen()){
-                            MainActivity.hideSoftKeyboard(loginRootLayout.findFocus())
-                            loginRootLayout.findFocus().clearFocus()
-                        }
-                        viewModel.isVisibleSearchSelectProgessBar.value = true
-                        it.isEnabled = false
-                        delay(5000)
-                        it.isEnabled = true
-                        viewModel.isVisibleSearchSelectProgessBar.value = false
-                    }
-                }
+            if (MainActivity.isKeyboardOnScreen()) {
+                MainActivity.hideSoftKeyboard(loginRootLayout.findFocus())
+                loginRootLayout.findFocus().clearFocus()
+            }
+
+            viewModel.isVisibleSearchSelectProgessBar.value = true
+            it.isEnabled = false
+
+            viewModel.viewModelScope.launch {
+                viewModel.onLoginButtonClick()
+
+                it.isEnabled = true
+                viewModel.isVisibleSearchSelectProgessBar.value = false
                 isRunning = false
             }
         }
     }
-
-    private suspend fun showKeyboardSafe(view: View) {
-        if (!MainActivity.isKeyboardOnScreen()) {
-            MainActivity.showSoftKeyboard(view)
-            delay(200)
-        }
-        else{
-            view.requestFocus()
-        }
-    }
-
 }
