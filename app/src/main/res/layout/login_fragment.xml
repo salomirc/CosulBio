@@ -15,68 +15,46 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         android:focusableInTouchMode="true"
         tools:context=".ui.login.LoginFragment">
 
-        <com.belsoft.cosulbio.views.ClearFocusEditText
-            android:id="@+id/usernameEditText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="32dp"
-            android:ems="10"
-            android:hint="@string/username"
-            android:imeOptions="actionNext"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName"
-            android:maxLength="50"
-            app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
+        <!--                <com.belsoft.cosulbio.views.ClearFocusEditText-->
+        <!--                    android:id="@+id/usernameEditText"-->
+        <!--                    android:layout_width="347dp"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:ems="10"-->
+        <!--                    android:hint="@string/username"-->
+        <!--                    android:imeOptions="actionNext"-->
+        <!--                    android:importantForAutofill="no"-->
+        <!--                    android:inputType="textPersonName"-->
+        <!--                    android:maxLength="50"-->
+        <!--                    tools:layout_editor_absoluteX="32dp"-->
+        <!--                    tools:layout_editor_absoluteY="217dp" />-->
 
-        <com.belsoft.cosulbio.views.ClearFocusEditText
-            android:id="@+id/passwordEditText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="@string/password"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:maxLength="50"
-            android:singleLine="false"
-            app:layout_constraintBottom_toTopOf="@+id/loginButton"
-            app:layout_constraintEnd_toEndOf="@+id/usernameEditText"
-            app:layout_constraintStart_toStartOf="@+id/usernameEditText"
-            app:layout_constraintTop_toBottomOf="@+id/usernameEditText" />
-
-        <Button
-            android:id="@+id/loginButton"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="0dp"
-            android:layout_height="46dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="32dp"
-            android:background="@drawable/standard_button_bg_states"
-            android:text="@string/Login"
-            android:textColor="@android:color/background_light"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/passwordEditText"
-            app:layout_constraintStart_toStartOf="@+id/passwordEditText"
-            app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
+        <!--        <com.belsoft.cosulbio.views.ClearFocusEditText-->
+        <!--            android:id="@+id/passwordEditText"-->
+        <!--            android:layout_width="347dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:autofillHints=""-->
+        <!--            android:ems="10"-->
+        <!--            android:hint="@string/password"-->
+        <!--            android:imeOptions="actionDone"-->
+        <!--            android:inputType="textPassword"-->
+        <!--            android:maxLength="50"-->
+        <!--            android:singleLine="false"-->
+        <!--            tools:layout_editor_absoluteX="32dp"-->
+        <!--            tools:layout_editor_absoluteY="262dp" />-->
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp"
             android:background="@android:drawable/toast_frame"
             android:backgroundTint="#EEEEEE"
             android:contentDescription="@string/Login"
             android:tint="#9C9C9C"
-            app:layout_constraintBottom_toTopOf="@+id/usernameEditText"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -84,18 +62,76 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/ic_person_black_24dp" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_min="100dp"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/loginButton"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.ProgressBar"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/standard_button_bg_states"
+            android:text="@string/Login"
+            android:textColor="@android:color/background_light"
+            android:textSize="18sp"
+            android:enabled="@{viewmodel.isLoginButtonEnabled}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <FrameLayout
+            android:id="@+id/overlayFrameLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#86898989"
             android:visibility="@{viewmodel.isVisibleSearchSelectProgessBar ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:theme="@style/AppTheme.ProgressBar" />
+        </FrameLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.3283582" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.4941957" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
