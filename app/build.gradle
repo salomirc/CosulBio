@@ -20,6 +20,13 @@ android {
         def apkName = "CosulBio-" + versionName + separator + buildNumber
         setProperty("archivesBaseName", apkName)
         vectorDrawables.useSupportLibrary = true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     signingConfigs {
