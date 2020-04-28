@@ -16,6 +16,8 @@ import com.belsoft.cosulbio.databinding.LoginFragmentBinding
 import com.belsoft.cosulbio.models.LoginFormItemModel
 import com.belsoft.cosulbio.utils.InjectorUtils
 import kotlinx.android.synthetic.main.login_fragment.*
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class LoginFragment : BaseFragment() {
@@ -64,6 +66,15 @@ class LoginFragment : BaseFragment() {
             }
         })
 
+        viewModel.hideKeyboardSafeLiveEvent.observe(this, Observer {
+            localScope.launch {
+                hideKeyboardSafe()
+                viewModel.viewModelScope.launch {
+                    viewModel.onLoginButtonClickContinuation()
+                }
+            }
+        })
+
         val loginItemList = mutableListOf(
             LoginFormItemModel(requireContext().getString(R.string.username)),
             LoginFormItemModel(requireContext().getString(R.string.password))
@@ -80,26 +91,13 @@ class LoginFragment : BaseFragment() {
                 viewModel.validateLoginField(it.toString(), loginEditTextList.indexOf(item))
             }
         }
+    }
 
-        loginButton.setOnClickListener {
-            if (isRunning) return@setOnClickListener
-            isRunning = true
-
-            if (MainActivity.isKeyboardOnScreen()) {
-                MainActivity.hideSoftKeyboard(loginRootLayout.findFocus())
-                loginRootLayout.findFocus().clearFocus()
-            }
-
-            viewModel.isVisibleSearchSelectProgessBar.value = true
-            it.isEnabled = false
-
-            viewModel.viewModelScope.launch {
-                viewModel.onLoginButtonClick()
-
-                it.isEnabled = true
-                viewModel.isVisibleSearchSelectProgessBar.value = false
-                isRunning = false
-            }
+     private suspend fun hideKeyboardSafe() {
+        if (MainActivity.isKeyboardOnScreen()) {
+            MainActivity.hideSoftKeyboard(loginRootLayout.findFocus())
+            loginRootLayout.findFocus().clearFocus()
+            delay(300)
         }
     }
 }

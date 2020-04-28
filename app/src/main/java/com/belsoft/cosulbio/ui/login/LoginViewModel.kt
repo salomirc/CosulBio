@@ -3,10 +3,9 @@ package com.belsoft.cosulbio.ui.login
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.belsoft.cosulbio.BaseViewModel
-import com.belsoft.cosulbio.R
+import com.belsoft.cosulbio.components.SingleLiveEvent
 import com.belsoft.cosulbio.database.IDbRepository
 import com.belsoft.cosulbio.database.User
-import com.belsoft.cosulbio.models.FormItemModel
 import com.belsoft.cosulbio.models.LoginFormItemModel
 import com.belsoft.cosulbio.services.IRequestHelper
 import kotlinx.coroutines.Dispatchers
@@ -46,6 +45,9 @@ class LoginViewModel(
         }
     }
 
+
+    val hideKeyboardSafeLiveEvent = SingleLiveEvent<Unit>()
+
     val userInfo = MutableLiveData<String>()
     val isLoginButtonEnabled = MutableLiveData<Boolean>().apply { value = false }
 
@@ -57,11 +59,19 @@ class LoginViewModel(
         isLoginButtonEnabled.value = allFieldsAreValidated(loginList)
     }
 
-    suspend fun onLoginButtonClick(){
+    fun onLoginButtonClick(){
+        hideKeyboardSafeLiveEvent.call()
+    }
+
+    suspend fun onLoginButtonClickContinuation() {
+        isLoginButtonEnabled.value = false
+        isVisibleSearchSelectProgessBar.value = true
         val map = mutableMapOf<String, String>()
-        for (item in loginList){
+        for (item in loginList) {
             map[item.hint] = item.value
         }
         delay(5000)
+        isVisibleSearchSelectProgessBar.value = false
+        isLoginButtonEnabled.value = true
     }
 }

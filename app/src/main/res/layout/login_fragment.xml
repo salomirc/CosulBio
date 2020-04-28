@@ -81,6 +81,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             android:textColor="@android:color/background_light"
             android:textSize="18sp"
             android:enabled="@{viewmodel.isLoginButtonEnabled}"
+            android:onClick="@{(view) -> viewmodel.onLoginButtonClick()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/passwordEditText"
             app:layout_constraintStart_toStartOf="@+id/passwordEditText"
