@@ -24,6 +24,9 @@ data class User(
     @ColumnInfo(name = "is_admin")
     val isAdmin: Boolean,
 
+    @ColumnInfo(name = "token")
+    var token: String? = null,
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id: Int = 0

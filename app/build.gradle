@@ -41,7 +41,8 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
-            buildConfigField "String", "BASE_URL", "\"https://belsoft.cf/\""
+//            buildConfigField "String", "BASE_URL", "\"https://belsoft.cf/\""
+            buildConfigField "String", "BASE_URL", "\"http://192.168.0.124:8889/\""
         }
         release {
             minifyEnabled false

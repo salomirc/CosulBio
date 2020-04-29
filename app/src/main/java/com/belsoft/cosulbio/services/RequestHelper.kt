@@ -5,7 +5,9 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import com.belsoft.cosulbio.BuildConfig
-import com.belsoft.cosulbio.api.IDontKnowMyPumpApi
+import com.belsoft.cosulbio.api.LoginApi
+import com.belsoft.cosulbio.database.User
+import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -72,12 +74,25 @@ class RequestHelper private constructor(private val appContext: Context) : IRequ
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    private val iDontKnowMyPumpApi: IDontKnowMyPumpApi by lazy { retrofit.create(IDontKnowMyPumpApi::class.java) }
+    private val iLoginApi: LoginApi by lazy { retrofit.create(LoginApi::class.java) }
 
 
     override fun getFrequencies(): List<String>? {
         try {
-            iDontKnowMyPumpApi.getFrequencies().execute().let { response ->
+            iLoginApi.getFrequencies().execute().let { response ->
+                if (response.code() == 200) return response.body()
+            }
+        }
+        catch (e: Exception){
+            println("Exception : ${e.message}")
+        }
+        return null
+    }
+
+    override fun login(username: String, password: String): User? {
+        try {
+            val credentials: String = Credentials.basic(username, password)
+            iLoginApi.login(credentials).execute().let { response ->
                 if (response.code() == 200) return response.body()
             }
         }

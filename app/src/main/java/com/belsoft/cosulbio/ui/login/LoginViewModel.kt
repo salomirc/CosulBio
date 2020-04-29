@@ -65,12 +65,12 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
     suspend fun onLoginButtonClickContinuation() {
         isLoginButtonEnabled.value = false
         isVisibleSearchSelectProgessBar.value = true
-        val map = mutableMapOf<String, String>()
-        for (item in loginList) {
-            map[item.hint] = item.value
+
+        val user = withContext(Dispatchers.IO){
+            requestHelper.login(loginList[0].value, loginList[1].value)
         }
-        delay(5000)
-        mainViewModel.toastMessageString.value = map.toString()
+
+        mainViewModel.toastMessageString.value = user.toString()
 
         isVisibleSearchSelectProgessBar.value = false
         isLoginButtonEnabled.value = true
