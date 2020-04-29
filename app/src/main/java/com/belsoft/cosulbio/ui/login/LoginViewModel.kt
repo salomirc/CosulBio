@@ -1,5 +1,6 @@
 package com.belsoft.cosulbio.ui.login
 
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.belsoft.cosulbio.BaseViewModel
@@ -13,9 +14,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class LoginViewModel(
-    private val dbRepository: IDbRepository,
-    private val requestHelper: IRequestHelper) : BaseViewModel() {
+class LoginViewModel(application: Application) : BaseViewModel(application) {
 
     init {
         viewModelScope.launch {
@@ -71,6 +70,8 @@ class LoginViewModel(
             map[item.hint] = item.value
         }
         delay(5000)
+        mainViewModel.toastMessageString.value = map.toString()
+
         isVisibleSearchSelectProgessBar.value = false
         isLoginButtonEnabled.value = true
     }

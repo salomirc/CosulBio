@@ -76,6 +76,14 @@ class MainActivity : BaseActivity(), IRootView {
             }
         })
 
+        //SingleEvent received from ViewModel
+        viewModel.toastMessageString.observe(this, Observer { message ->
+            // Update the cached copy of the words in the adapter.
+            message?.let {
+                displayToastMessage(this, it)
+            }
+        })
+
         //Demo Void SingleEvent received from ViewModel
         viewModel.singleLiveEvent.observe(this, Observer {
             displayToastMessage(this, "singleLiveEvent")
@@ -87,11 +95,9 @@ class MainActivity : BaseActivity(), IRootView {
     }
 
     private fun setArchitectureComponents() {
-        // Get the ViewModelFactory with all of it's dependencies constructed
-        val factory = InjectorUtils.provideMainViewModelFactory()
 
         // Obtain the ViewModel component.
-        viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         // Inflate view and obtain an instance of the binding class.
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)

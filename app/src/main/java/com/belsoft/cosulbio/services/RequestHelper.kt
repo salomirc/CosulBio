@@ -24,7 +24,7 @@ class RequestHelper private constructor(private val appContext: Context) : IRequ
         }
     }
 
-    override fun hasInternetConnection(context: Context?) : Boolean {
+    override fun hasInternetConnection(): Boolean {
         try {
             val connectivityManager = appContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

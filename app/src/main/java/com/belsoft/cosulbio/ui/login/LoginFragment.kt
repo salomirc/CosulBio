@@ -39,13 +39,11 @@ class LoginFragment : BaseFragment() {
     }
 
     private fun setArchitectureComponents() {
-        // Get the QuotesViewModelFactory with all of it's dependencies constructed
-        val factory = InjectorUtils.provideLoginViewModelFactory()
 
         // Use ViewModelProviders class to create / get already created QuotesViewModel
         // for this view (activity)
-        viewModel = ViewModelProvider(this, factory)
-            .get(LoginViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        viewModel.mainViewModel = mainViewModel
 
         // Inflate view and obtain an instance of the binding class.
         val binding: LoginFragmentBinding = LoginFragmentBinding.bind(fgmView)
@@ -58,14 +56,6 @@ class LoginFragment : BaseFragment() {
     }
 
     private fun initializeUI() {
-        //SingleEvent received from ViewModel
-        viewModel.toastMessage.observe(viewLifecycleOwner, Observer { message ->
-            // Update the cached copy of the words in the adapter.
-            message?.let {
-                mainViewModel.toastMessage.value = it
-            }
-        })
-
         viewModel.hideKeyboardSafeLiveEvent.observe(this, Observer {
             localScope.launch {
                 hideKeyboardSafe()

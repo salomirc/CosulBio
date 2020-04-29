@@ -10,18 +10,18 @@ import com.belsoft.cosulbio.ui.login.LoginViewModel
 
 object InjectorUtils {
 
-    private val dbRepository = DbRepository.getInstance(MainActivity.appContext)
-    private val requestHelper = RequestHelper.getInstance(MainActivity.appContext)
-
-    fun provideMainViewModelFactory(): ViewModelFactory<MainViewModel> {
-        return ViewModelFactory {
-            MainViewModel(dbRepository, requestHelper)
-        }
-    }
-
-    fun provideLoginViewModelFactory(): ViewModelFactory<LoginViewModel> {
-        return ViewModelFactory {
-            LoginViewModel(dbRepository, requestHelper)
-        }
-    }
+//    private val dbRepository = DbRepository.getInstance(MainActivity.appContext)
+//    private val requestHelper = RequestHelper.getInstance(MainActivity.appContext)
+//
+//    fun provideMainViewModelFactory(): ViewModelFactory<MainViewModel> {
+//        return ViewModelFactory {
+//            MainViewModel(dbRepository, requestHelper)
+//        }
+//    }
+//
+//    fun provideLoginViewModelFactory(): ViewModelFactory<LoginViewModel> {
+//        return ViewModelFactory {
+//            LoginViewModel(dbRepository, requestHelper)
+//        }
+//    }
 }

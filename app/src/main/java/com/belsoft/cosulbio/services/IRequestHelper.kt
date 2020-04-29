@@ -4,7 +4,7 @@ import android.content.Context
 
 interface IRequestHelper {
 
-    fun hasInternetConnection(context: Context? = null) : Boolean
+    fun hasInternetConnection() : Boolean
 
     fun getFrequencies() : List<String>?
 }
