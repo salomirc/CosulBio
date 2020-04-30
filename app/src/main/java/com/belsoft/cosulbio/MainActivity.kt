@@ -34,7 +34,6 @@ class MainActivity : BaseActivity(), IRootView {
     lateinit var viewModel: MainViewModel
 
     companion object {
-        lateinit var appContext: Context
         lateinit var isKeyboardOnScreen: () -> Boolean
         lateinit var hideSoftKeyboard: (View) -> Unit
         lateinit var showSoftKeyboard: (View) -> Unit
@@ -43,7 +42,6 @@ class MainActivity : BaseActivity(), IRootView {
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme_NoActionBar)
         super.onCreate(savedInstanceState)
-        setApplicationContext()
         setArchitectureComponents()
         setActivityComponents()
 
@@ -90,14 +88,13 @@ class MainActivity : BaseActivity(), IRootView {
         })
     }
 
-    private fun setApplicationContext() {
-        appContext = this.applicationContext
-    }
-
     private fun setArchitectureComponents() {
 
+        // Get the MainViewModelFactory with all of it's dependencies constructed
+        val factory = InjectorUtils.getInstance(applicationContext).provideMainViewModelFactory()
+
         // Obtain the ViewModel component.
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
 
         // Inflate view and obtain an instance of the binding class.
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)

@@ -1,6 +1,6 @@
 package com.belsoft.cosulbio.ui.login
 
-import android.app.Application
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.belsoft.cosulbio.BaseViewModel
@@ -10,11 +10,12 @@ import com.belsoft.cosulbio.database.User
 import com.belsoft.cosulbio.models.LoginFormItemModel
 import com.belsoft.cosulbio.services.IRequestHelper
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class LoginViewModel(application: Application) : BaseViewModel(application) {
+class LoginViewModel(private val dbRepository : IDbRepository,
+                     private val requestHelper : IRequestHelper,
+                     private val appContext: Context) : BaseViewModel() {
 
     init {
         viewModelScope.launch {

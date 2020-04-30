@@ -1,20 +1,11 @@
 package com.belsoft.cosulbio
 
-import android.app.Application
 import android.util.Patterns
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.belsoft.cosulbio.components.SingleLiveEvent
-import com.belsoft.cosulbio.database.DbRepository
-import com.belsoft.cosulbio.database.IDbRepository
+import androidx.lifecycle.ViewModel
 import com.belsoft.cosulbio.models.LoginFormItemModel
-import com.belsoft.cosulbio.services.IRequestHelper
-import com.belsoft.cosulbio.services.RequestHelper
 
-open class BaseViewModel(application: Application) : AndroidViewModel(application) {
-
-    val dbRepository : IDbRepository = DbRepository.getInstance(application)
-    val requestHelper : IRequestHelper = RequestHelper.getInstance(application)
+open class BaseViewModel : ViewModel() {
 
     lateinit var mainViewModel: MainViewModel
 
