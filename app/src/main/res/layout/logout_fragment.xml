@@ -1,15 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.logout.LogoutFragment">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View" />
+        <variable name="viewmodel" type="com.belsoft.cosulbio.ui.logout.LogoutViewModel" />
+    </data>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="20sp"
-        android:text="Logout." />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/loginRootLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:focusableInTouchMode="true"
+        tools:context=".ui.logout.LogoutFragment">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="32dp"
+            android:background="@android:drawable/toast_frame"
+            android:backgroundTint="#EEEEEE"
+            android:contentDescription="@string/logout"
+            android:tint="#9C9C9C"
+            app:layout_constraintBottom_toTopOf="@+id/textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/ic_person_black_24dp" />
+
+        <Button
+            android:id="@+id/logoutButton"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/standard_button_bg_states"
+            android:enabled="@{viewmodel.isLogoutButtonEnabled()}"
+            android:onClick="@{(view) -> viewmodel.onLogoutButtonClick()}"
+            android:text="@string/iesire_din_cont"
+            android:theme="@style/CustomButtonStyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif"
+            android:text="@string/logout_confirm"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/logoutButton"
+            app:layout_constraintEnd_toEndOf="@+id/logoutButton"
+            app:layout_constraintStart_toStartOf="@+id/logoutButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

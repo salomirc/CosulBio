@@ -7,8 +7,6 @@ import com.belsoft.cosulbio.models.LoginFormItemModel
 
 open class BaseViewModel : ViewModel() {
 
-    lateinit var mainViewModel: MainViewModel
-
     val isVisibleSearchSelectProgessBar = MutableLiveData<Boolean>().apply { value = false}
 
     protected fun isNotBlankValidation(text: String): Boolean {

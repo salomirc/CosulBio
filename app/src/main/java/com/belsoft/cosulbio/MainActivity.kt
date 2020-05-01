@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -22,10 +23,13 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import com.belsoft.cosulbio.databinding.ActivityMainBinding
 import com.belsoft.cosulbio.interfaces.IRootView
 import com.belsoft.cosulbio.utils.InjectorUtils
 import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.login_fragment.*
+import kotlinx.android.synthetic.main.nav_header_main.*
 
 class MainActivity : BaseActivity(), IRootView {
 
@@ -86,6 +90,13 @@ class MainActivity : BaseActivity(), IRootView {
         viewModel.singleLiveEvent.observe(this, Observer {
             displayToastMessage(this, "singleLiveEvent")
         })
+
+        viewModel.navigateLiveEvent.observe(this, Observer {id ->
+            id?.let {
+                val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+                navController.navigate(id)
+            }
+        })
     }
 
     private fun setArchitectureComponents() {
@@ -133,15 +144,32 @@ class MainActivity : BaseActivity(), IRootView {
         navView.setupWithNavController(navController)
 
         //Hide Logout menu item
-//        val menu = navView.menu
-//        val logoutItem = menu.findItem(R.id.logoutFragment)
-//        logoutItem.isVisible = false
+        val menu = navView.menu
+        val logoutItem = menu.findItem(R.id.logoutFragment)
+        val loginItem = menu.findItem(R.id.loginFragment)
+        logoutItem.isVisible = false
 
-//        val header = navView.getHeaderView(0)
-//        val userNameTextView = header.findViewById<TextView>(R.id.userNameTextView)
-//        val mailAdressTextView = header.findViewById<TextView>(R.id.mailAdressTextView)
-//        userNameTextView.text = "Ciprian Salomir"
-//        mailAdressTextView.text = "ciprian.salomir@gmail.com"
+        val header = navView.getHeaderView(0)
+        val userNameTextView: TextView = header.findViewById<TextView>(R.id.userNameTextView)
+        val mailAdressTextView = header.findViewById<TextView>(R.id.mailAdressTextView)
+
+        viewModel.userInfo.observe(this, Observer { user ->
+            if (user == null){
+                userNameTextView.text = getString(R.string.nav_header_title)
+                mailAdressTextView.text = getString(R.string.empty)
+            }
+            else{
+                userNameTextView.text = getString(R.string.full_name_with_args, user.firstName, user.lastName)
+                mailAdressTextView.text = user.email
+            }
+        })
+
+        viewModel.isUserLogged.observe(this, Observer { value ->
+            value?.let {
+                logoutItem.isVisible = value
+                loginItem.isVisible = !value
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

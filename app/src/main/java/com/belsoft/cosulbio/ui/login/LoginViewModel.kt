@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.belsoft.cosulbio.BaseViewModel
+import com.belsoft.cosulbio.MainViewModel
+import com.belsoft.cosulbio.R
 import com.belsoft.cosulbio.components.SingleLiveEvent
 import com.belsoft.cosulbio.database.IDbRepository
 import com.belsoft.cosulbio.database.User
@@ -13,7 +15,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class LoginViewModel(private val dbRepository : IDbRepository,
+class LoginViewModel(private val _mainViewModel: MainViewModel,
+                     private val dbRepository : IDbRepository,
                      private val requestHelper : IRequestHelper,
                      private val appContext: Context) : BaseViewModel() {
 
@@ -71,7 +74,11 @@ class LoginViewModel(private val dbRepository : IDbRepository,
             requestHelper.login(loginList[0].value, loginList[1].value)
         }
 
-        mainViewModel.toastMessageString.value = user.toString()
+        _mainViewModel.userInfo.value = user
+        _mainViewModel.toastMessageString.value = user.toString()
+        user?.let {
+            _mainViewModel.navigateLiveEvent.value = R.id.action_loginFragment_to_homeFragment
+        }
 
         isVisibleSearchSelectProgessBar.value = false
         isLoginButtonEnabled.value = true

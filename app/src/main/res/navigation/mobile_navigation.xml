@@ -18,12 +18,32 @@
         android:id="@+id/loginFragment"
         android:name="com.belsoft.cosulbio.ui.login.LoginFragment"
         android:label="@string/login"
-        tools:layout="@layout/login_fragment" />
+        tools:layout="@layout/login_fragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/logoutFragment"
         android:name="com.belsoft.cosulbio.ui.logout.LogoutFragment"
         android:label="@string/logout"
-        tools:layout="@layout/logout_fragment" />
+        tools:layout="@layout/logout_fragment" >
+        <action
+            android:id="@+id/action_logoutFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/cosulMeuFragment"
         android:name="com.belsoft.cosulbio.ui.cosul.CosulMeuFragment"

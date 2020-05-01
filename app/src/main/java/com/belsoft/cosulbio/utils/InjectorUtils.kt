@@ -5,6 +5,7 @@ import com.belsoft.cosulbio.MainViewModel
 import com.belsoft.cosulbio.database.DbRepository
 import com.belsoft.cosulbio.services.RequestHelper
 import com.belsoft.cosulbio.ui.login.LoginViewModel
+import com.belsoft.cosulbio.ui.logout.LogoutViewModel
 
 class InjectorUtils private constructor(private val appContext: Context) {
 
@@ -28,9 +29,15 @@ class InjectorUtils private constructor(private val appContext: Context) {
         }
     }
 
-    fun provideLoginViewModelFactory(): ViewModelFactory<LoginViewModel> {
+    fun provideLoginViewModelFactory(_mainViewModel: MainViewModel): ViewModelFactory<LoginViewModel> {
         return ViewModelFactory {
-            LoginViewModel(dbRepository, requestHelper, appContext)
+            LoginViewModel(_mainViewModel, dbRepository, requestHelper, appContext)
+        }
+    }
+
+    fun provideLogoutViewModelFactory(_mainViewModel: MainViewModel): ViewModelFactory<LogoutViewModel> {
+        return ViewModelFactory {
+            LogoutViewModel(_mainViewModel, dbRepository, requestHelper, appContext)
         }
     }
 }
