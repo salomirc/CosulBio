@@ -4,14 +4,28 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import androidx.lifecycle.viewModelScope
 import com.belsoft.cosulbio.components.SingleLiveEvent
 import com.belsoft.cosulbio.database.IDbRepository
 import com.belsoft.cosulbio.database.User
 import com.belsoft.cosulbio.services.IRequestHelper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainViewModel(private val dbRepository : IDbRepository,
                     private val requestHelper : IRequestHelper,
                     private val appContext: Context) : BaseViewModel() {
+    init {
+        viewModelScope.launch {
+            val users = withContext(Dispatchers.IO){
+                dbRepository.getUsers()
+            }
+            if (users.isNotEmpty()){
+                userInfo.value = users[0]
+            }
+        }
+    }
 
     val singleLiveEvent = SingleLiveEvent<Unit>()
     val navigateLiveEvent = SingleLiveEvent<Int>()

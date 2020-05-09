@@ -21,32 +21,25 @@ class LoginViewModel(private val _mainViewModel: MainViewModel,
                      private val appContext: Context) : BaseViewModel() {
 
     init {
-        viewModelScope.launch {
-//            addUserToDb()
-        }
     }
 
-    private suspend fun addUserToDb() {
-        val user = User(
-            "Ciprian",
-            "redhatslx",
-            "Ciprian",
-            "Salomir",
-            "ciprian.salomir@gmail.com",
-            false
-        )
-        val users = withContext(Dispatchers.IO) {
-            dbRepository.addUser(user)
-            dbRepository.getUsers()
-        }
-        users.let {
-            userInfo.value = it.toString()
-            println()
-        }
-        withContext(Dispatchers.IO) {
-             dbRepository.deleteAllUsers()
-        }
-    }
+//    private suspend fun addUserToDb() {
+//        val user = User(
+//            "Ciprian",
+//            "redhatslx",
+//            "Ciprian",
+//            "Salomir",
+//            "ciprian.salomir@gmail.com",
+//            false
+//        )
+//        val users = withContext(Dispatchers.IO) {
+//            dbRepository.addUser(user)
+//            dbRepository.getUsers()
+//        }
+//        withContext(Dispatchers.IO) {
+//             dbRepository.deleteAllUsers()
+//        }
+//    }
 
 
     val hideKeyboardSafeLiveEvent = SingleLiveEvent<Unit>()
@@ -75,8 +68,11 @@ class LoginViewModel(private val _mainViewModel: MainViewModel,
         }
 
         _mainViewModel.userInfo.value = user
-        _mainViewModel.toastMessageString.value = user.toString()
+//        _mainViewModel.toastMessageString.value = user.toString()
         user?.let {
+            val id = withContext(Dispatchers.IO) {
+                dbRepository.addUser(user)
+            }
             _mainViewModel.navigateLiveEvent.value = R.id.action_loginFragment_to_homeFragment
         }
 
