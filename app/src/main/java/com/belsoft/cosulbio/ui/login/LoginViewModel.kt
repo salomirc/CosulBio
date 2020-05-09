@@ -20,27 +20,6 @@ class LoginViewModel(private val _mainViewModel: MainViewModel,
                      private val requestHelper : IRequestHelper,
                      private val appContext: Context) : BaseViewModel() {
 
-    init {
-    }
-
-//    private suspend fun addUserToDb() {
-//        val user = User(
-//            "Ciprian",
-//            "redhatslx",
-//            "Ciprian",
-//            "Salomir",
-//            "ciprian.salomir@gmail.com",
-//            false
-//        )
-//        val users = withContext(Dispatchers.IO) {
-//            dbRepository.addUser(user)
-//            dbRepository.getUsers()
-//        }
-//        withContext(Dispatchers.IO) {
-//             dbRepository.deleteAllUsers()
-//        }
-//    }
-
 
     val hideKeyboardSafeLiveEvent = SingleLiveEvent<Unit>()
 
@@ -73,7 +52,7 @@ class LoginViewModel(private val _mainViewModel: MainViewModel,
             val id = withContext(Dispatchers.IO) {
                 dbRepository.addUser(user)
             }
-            _mainViewModel.navigateLiveEvent.value = R.id.action_loginFragment_to_homeFragment
+            _mainViewModel.navigateLiveEvent.value = R.id.action_loginFragment_to_loginSuccessFragment
         }
 
         isVisibleSearchSelectProgessBar.value = false

@@ -20,14 +20,13 @@
         android:label="@string/login"
         tools:layout="@layout/login_fragment" >
         <action
-            android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
+            android:id="@+id/action_loginFragment_to_loginSuccessFragment"
+            app:destination="@id/loginSuccessFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/logoutFragment"
@@ -49,4 +48,19 @@
         android:name="com.belsoft.cosulbio.ui.cosul.CosulMeuFragment"
         android:label="@string/cosul_meu"
         tools:layout="@layout/cosul_meu_fragment" />
+    <fragment
+        android:id="@+id/loginSuccessFragment"
+        android:name="com.belsoft.cosulbio.ui.loginsucces.LoginSuccessFragment"
+        android:label="@string/login_success"
+        tools:layout="@layout/fragment_login_success">
+        <action
+            android:id="@+id/action_loginSuccessFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

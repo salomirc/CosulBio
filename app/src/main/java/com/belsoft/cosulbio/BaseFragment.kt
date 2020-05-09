@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.belsoft.cosulbio.utils.InjectorUtils
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 
 abstract class BaseFragment : Fragment() {
 
@@ -24,5 +26,10 @@ abstract class BaseFragment : Fragment() {
         // Use ViewModelProviders class to create / get already created QuotesViewModel
         // for this view (activity)
         mainViewModel = ViewModelProvider(requireActivity(), factory).get(MainViewModel::class.java)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        localScope.cancel()
     }
 }
