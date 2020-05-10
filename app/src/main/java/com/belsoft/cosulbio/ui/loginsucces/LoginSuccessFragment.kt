@@ -60,15 +60,7 @@ class LoginSuccessFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        localScope.launch {
-            try {
-                delay(3000)
-                navController.navigate(R.id.action_loginSuccessFragment_to_homeFragment)
-            }
-            catch (e: CancellationException) {
-                println("Coroutine cancelled - ${e.message}")
-            }
-        }
+        viewModel.navigateToHomeFragment()
     }
 
 }
