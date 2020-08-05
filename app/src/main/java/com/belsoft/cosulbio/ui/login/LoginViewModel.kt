@@ -2,17 +2,14 @@ package com.belsoft.cosulbio.ui.login
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.belsoft.cosulbio.BaseViewModel
 import com.belsoft.cosulbio.MainViewModel
 import com.belsoft.cosulbio.R
 import com.belsoft.cosulbio.components.SingleLiveEvent
 import com.belsoft.cosulbio.database.IDbRepository
-import com.belsoft.cosulbio.database.User
 import com.belsoft.cosulbio.models.LoginFormItemModel
 import com.belsoft.cosulbio.services.IRequestHelper
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class LoginViewModel(private val _mainViewModel: MainViewModel,
@@ -23,7 +20,6 @@ class LoginViewModel(private val _mainViewModel: MainViewModel,
 
     val hideKeyboardSafeLiveEvent = SingleLiveEvent<Unit>()
 
-    val userInfo = MutableLiveData<String>()
     val isLoginButtonEnabled = MutableLiveData<Boolean>().apply { value = false }
 
     var loginList = listOf<LoginFormItemModel>()
@@ -40,7 +36,7 @@ class LoginViewModel(private val _mainViewModel: MainViewModel,
 
     suspend fun onLoginButtonClickContinuation() {
         isLoginButtonEnabled.value = false
-        isVisibleSearchSelectProgessBar.value = true
+        isVisibleSearchSelectProgressBar.value = true
 
         val user = withContext(Dispatchers.IO){
             requestHelper.login(loginList[0].value, loginList[1].value)
@@ -55,7 +51,7 @@ class LoginViewModel(private val _mainViewModel: MainViewModel,
             _mainViewModel.navigateLiveEvent.value = R.id.action_loginFragment_to_loginSuccessFragment
         }
 
-        isVisibleSearchSelectProgessBar.value = false
+        isVisibleSearchSelectProgressBar.value = false
         isLoginButtonEnabled.value = true
     }
 }

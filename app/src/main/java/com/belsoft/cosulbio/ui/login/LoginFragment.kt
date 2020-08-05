@@ -16,8 +16,6 @@ import com.belsoft.cosulbio.databinding.LoginFragmentBinding
 import com.belsoft.cosulbio.models.LoginFormItemModel
 import com.belsoft.cosulbio.utils.InjectorUtils
 import kotlinx.android.synthetic.main.login_fragment.*
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class LoginFragment : BaseFragment() {
@@ -60,11 +58,9 @@ class LoginFragment : BaseFragment() {
 
     private fun initializeUI() {
         viewModel.hideKeyboardSafeLiveEvent.observe(this, Observer {
-            localScope.launch {
-                hideKeyboardSafe()
-                viewModel.viewModelScope.launch {
-                    viewModel.onLoginButtonClickContinuation()
-                }
+            hideKeyboardSafe()
+            viewModel.viewModelScope.launch {
+                viewModel.onLoginButtonClickContinuation()
             }
         })
 
@@ -86,11 +82,10 @@ class LoginFragment : BaseFragment() {
         }
     }
 
-     private suspend fun hideKeyboardSafe() {
+     private fun hideKeyboardSafe() {
         if (MainActivity.isKeyboardOnScreen()) {
             MainActivity.hideSoftKeyboard(loginRootLayout.findFocus())
             loginRootLayout.findFocus().clearFocus()
-            delay(300)
         }
     }
 }
