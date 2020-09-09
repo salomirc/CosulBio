@@ -4,6 +4,7 @@ import android.content.Context
 import com.belsoft.cosulbio.MainViewModel
 import com.belsoft.cosulbio.database.DbRepository
 import com.belsoft.cosulbio.services.RequestHelper
+import com.belsoft.cosulbio.ui.home.HomeViewModel
 import com.belsoft.cosulbio.ui.login.LoginViewModel
 import com.belsoft.cosulbio.ui.loginsucces.LoginSuccessViewModel
 import com.belsoft.cosulbio.ui.logout.LogoutViewModel
@@ -27,6 +28,12 @@ class InjectorUtils private constructor(private val appContext: Context) {
     fun provideMainViewModelFactory(): ViewModelFactory<MainViewModel> {
         return ViewModelFactory {
             MainViewModel(dbRepository, requestHelper, appContext)
+        }
+    }
+
+    fun provideHomeViewModelFactory(_mainViewModel: MainViewModel): ViewModelFactory<HomeViewModel> {
+        return ViewModelFactory {
+            HomeViewModel(_mainViewModel, dbRepository, requestHelper)
         }
     }
 

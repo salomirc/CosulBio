@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.belsoft.cosulbio.components.SingleLiveEvent
 import com.belsoft.cosulbio.database.IDbRepository
 import com.belsoft.cosulbio.database.User
+import com.belsoft.cosulbio.models.Product
 import com.belsoft.cosulbio.services.IRequestHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,4 +38,7 @@ class MainViewModel(private val dbRepository : IDbRepository,
     val isUserLogged: LiveData<Boolean> = Transformations.map(userInfo) {user ->
         user != null
     }
+
+    val allProducts = MutableLiveData<List<Product>>().apply { value = listOf() }
+
 }

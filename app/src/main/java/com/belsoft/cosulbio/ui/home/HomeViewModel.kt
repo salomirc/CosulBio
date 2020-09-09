@@ -1,13 +1,29 @@
 package com.belsoft.cosulbio.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.belsoft.cosulbio.BaseViewModel
+import com.belsoft.cosulbio.MainViewModel
+import com.belsoft.cosulbio.database.IDbRepository
+import com.belsoft.cosulbio.models.Product
+import com.belsoft.cosulbio.services.IRequestHelper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(private val _mainViewModel: MainViewModel,
+       private val dbRepository : IDbRepository,
+       private val requestHelper : IRequestHelper) : BaseViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    suspend fun getAllProducts() {
+        isVisibleProgressBar.value = true
+        val products: List<Product>? = withContext(Dispatchers.IO){
+            requestHelper.getProducts()
+        }
+
+        products?.let {
+            _mainViewModel.allProducts.value = it
+//            val id = withContext(Dispatchers.IO) {
+//                dbRepository.addUser(products)
+//            }
+        }
+        isVisibleProgressBar.value = false
     }
-    val text: LiveData<String> = _text
 }

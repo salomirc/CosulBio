@@ -8,6 +8,7 @@ import android.widget.EditText
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.lifecycle.viewModelScope
 import com.belsoft.cosulbio.BaseFragment
 import com.belsoft.cosulbio.MainActivity

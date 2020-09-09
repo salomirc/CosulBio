@@ -8,7 +8,7 @@
         android:id="@+id/homeFragment"
         android:name="com.belsoft.cosulbio.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/home_fragment" />
     <fragment
         android:id="@+id/myOrdersFragment"
         android:name="com.belsoft.cosulbio.ui.orders.MyOrdersFragment"

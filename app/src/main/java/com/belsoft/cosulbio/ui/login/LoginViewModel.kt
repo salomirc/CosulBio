@@ -36,7 +36,7 @@ class LoginViewModel(private val _mainViewModel: MainViewModel,
 
     suspend fun onLoginButtonClickContinuation() {
         isLoginButtonEnabled.value = false
-        isVisibleSearchSelectProgressBar.value = true
+        isVisibleProgressBar.value = true
 
         val user = withContext(Dispatchers.IO){
             requestHelper.login(loginList[0].value, loginList[1].value)
@@ -51,7 +51,7 @@ class LoginViewModel(private val _mainViewModel: MainViewModel,
             _mainViewModel.navigateLiveEvent.value = R.id.action_loginFragment_to_loginSuccessFragment
         }
 
-        isVisibleSearchSelectProgressBar.value = false
+        isVisibleProgressBar.value = false
         isLoginButtonEnabled.value = true
     }
 }

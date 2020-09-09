@@ -4,39 +4,79 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.belsoft.cosulbio.BaseFragment
+import com.belsoft.cosulbio.MainActivity
 import com.belsoft.cosulbio.R
+import com.belsoft.cosulbio.adapters.AllProductsListAdapter
+import com.belsoft.cosulbio.databinding.HomeFragmentBinding
+import com.belsoft.cosulbio.utils.InjectorUtils
+import kotlinx.android.synthetic.main.home_fragment.*
+import kotlinx.coroutines.launch
 
 class HomeFragment : BaseFragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var viewModel: HomeViewModel
 
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        // Inflate the layout for this fragment
+        fgmView = inflater.inflate(R.layout.home_fragment, container, false)
+        return fgmView
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setArchitectureComponents()
         initializeUI()
+    }
+
+    private fun setArchitectureComponents() {
+
+        // Get the QuotesViewModelFactory with all of it's dependencies constructed
+        val factory = InjectorUtils.getInstance(requireActivity().applicationContext).
+        provideHomeViewModelFactory(mainViewModel)
+
+        // Use ViewModelProviders class to create / get already created QuotesViewModel
+        // for this view (activity)
+        viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
+
+        // Inflate view and obtain an instance of the binding class.
+        val binding: HomeFragmentBinding = HomeFragmentBinding.bind(fgmView)
+
+        // Specify the current activity as the lifecycle owner.
+        binding.lifecycleOwner = this
+
+        // Assign the component to a property in the binding class.
+        binding.viewmodel = viewModel
     }
 
     private fun initializeUI() {
         mainViewModel.isFabButtonEnabled.value = true
+
+        // Plug in the linear layout manager:
+        val layoutManager = LinearLayoutManager(activity)
+        recyclerView.layoutManager = layoutManager
+
+        // Plug in my adapter:
+        val adapter = AllProductsListAdapter((activity as MainActivity).viewModel.allProducts.value!!)
+        recyclerView.adapter = adapter
+        recyclerView.setHasFixedSize(true)
+
+        //Set Observer for RecyclerView source list
+        (activity as MainActivity).viewModel.allProducts.observe(viewLifecycleOwner, Observer { itemList ->
+            // Update the cached copy of the words in the adapter.
+            itemList?.let { adapter.setItems(it) }
+        })
+
+        if ((activity as MainActivity).viewModel.allProducts.value!!.isEmpty()) {
+            viewModel.viewModelScope.launch {
+                viewModel.getAllProducts()
+            }
+        }
     }
 
     override fun onPause() {

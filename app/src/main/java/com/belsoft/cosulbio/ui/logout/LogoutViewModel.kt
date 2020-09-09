@@ -29,6 +29,7 @@ class LogoutViewModel(private val _mainViewModel: MainViewModel,
                 dbRepository.deleteAllUsers()
             }
             _mainViewModel.userInfo.value = null
+            _mainViewModel.allProducts.value = listOf()
             _mainViewModel.navigateLiveEvent.value = R.id.action_logoutFragment_to_homeFragment
         }
     }
