@@ -13,6 +13,7 @@ import com.belsoft.cosulbio.services.IRequestHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.math.BigDecimal
 
 class MainViewModel(private val dbRepository : IDbRepository,
                     private val requestHelper : IRequestHelper,
@@ -35,10 +36,9 @@ class MainViewModel(private val dbRepository : IDbRepository,
 
     val isFabButtonEnabled = MutableLiveData<Boolean>().apply { value = false }
     val userInfo = MutableLiveData<User>()
-    val isUserLogged: LiveData<Boolean> = Transformations.map(userInfo) {user ->
+    val isUserLogged: LiveData<Boolean> = Transformations.map(userInfo) { user ->
         user != null
     }
 
     val allProducts = MutableLiveData<List<Product>>().apply { value = listOf() }
-
 }

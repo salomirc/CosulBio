@@ -13,7 +13,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         tools:context=".ui.loginsucces.LoginSuccessFragment">
 
         <TextView
-            android:id="@+id/titleTextView"
+            android:id="@+id/nameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/logged_in_successfully"
@@ -35,9 +35,9 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             android:src="@drawable/ic_assignment_turned_in_black_24dp"
             android:tint="#4CAF50"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/titleTextView"
-            app:layout_constraintStart_toStartOf="@+id/titleTextView"
-            app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+            app:layout_constraintEnd_toEndOf="@+id/nameTextView"
+            app:layout_constraintStart_toStartOf="@+id/nameTextView"
+            app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
 
         <TextView
             android:id="@+id/userFullNameTextView"
@@ -47,7 +47,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             android:text="@{viewmodel.userFullName}"
             android:textSize="18sp"
             android:textStyle="bold|italic"
-            app:layout_constraintBottom_toTopOf="@+id/titleTextView"
+            app:layout_constraintBottom_toTopOf="@+id/nameTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"

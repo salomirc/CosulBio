@@ -9,4 +9,5 @@ interface IRequestHelper {
     fun login(username: String, password: String): User?
 //    fun getProducts(token: String) : List<Product>?
     fun getProducts() : List<Product>?
+    fun getFileAsByteArray(fileName : String) : ByteArray?
 }

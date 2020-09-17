@@ -40,4 +40,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="logged_in_successfully">Autentificare cu success!</string>
     <string name="logged_in_successfully_icon">logged in successfully icon</string>
+    <string name="pret">Pre&#355; :</string>
+    <string name="unit">Unit :</string>
+    <string name="ron">RON</string>
 </resources>

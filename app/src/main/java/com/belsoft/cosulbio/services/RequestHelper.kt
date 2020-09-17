@@ -117,4 +117,16 @@ class RequestHelper private constructor(private val appContext: Context) : IRequ
         }
         return null
     }
+
+    override fun getFileAsByteArray(fileName: String): ByteArray? {
+        try {
+            iProductsApi.getFileAsByteArray(fileName).execute().let { response ->
+                if (response.code() == 200) return response.body()?.bytes()
+            }
+        }
+        catch (e: Exception){
+            println("Exception : ${e.message}")
+        }
+        return null
+    }
 }

@@ -12,4 +12,6 @@
     <color name="standard_button_normal">@color/colorPaleteMaron</color>
     <color name="standard_button_pressed">@color/colorPaleteMaronDark</color>
     <color name="standard_button_disabled">#D5D6D8</color>
+
+    <color name="colorScrollBar">@android:color/darker_gray</color>
 </resources>

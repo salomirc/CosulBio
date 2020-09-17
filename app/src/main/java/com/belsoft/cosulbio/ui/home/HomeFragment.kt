@@ -72,6 +72,14 @@ class HomeFragment : BaseFragment() {
             itemList?.let { adapter.setItems(it) }
         })
 
+        //Set Observer for RecyclerView source list
+        viewModel.updateCellLiveEvent.observe(viewLifecycleOwner, Observer { index ->
+            // Update the cached copy of the words in the adapter.
+            index?.let {
+                adapter.notifyUpdate(index)
+            }
+        })
+
         if ((activity as MainActivity).viewModel.allProducts.value!!.isEmpty()) {
             viewModel.viewModelScope.launch {
                 viewModel.getAllProducts()
