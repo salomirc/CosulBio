@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.lifecycle.viewModelScope
 import com.belsoft.cosulbio.BaseFragment
 import com.belsoft.cosulbio.MainActivity
@@ -21,6 +19,7 @@ import kotlinx.coroutines.launch
 
 class LoginFragment : BaseFragment() {
 
+    private lateinit var binding: LoginFragmentBinding
     private lateinit var viewModel: LoginViewModel
     private lateinit var loginEditTextList: List<EditText>
 
@@ -39,18 +38,18 @@ class LoginFragment : BaseFragment() {
 
     private fun setArchitectureComponents() {
 
-        // Get the QuotesViewModelFactory with all of it's dependencies constructed
+        // Get the LoginViewModelFactory with all of it's dependencies constructed
         val factory = InjectorUtils.getInstance(requireActivity().applicationContext).
                                                     provideLoginViewModelFactory(mainViewModel)
 
-        // Use ViewModelProviders class to create / get already created QuotesViewModel
+        // Use ViewModelProviders class to create / get already created LoginViewModel
         // for this view (activity)
         viewModel = ViewModelProvider(this, factory).get(LoginViewModel::class.java)
 
         // Inflate view and obtain an instance of the binding class.
-        val binding: LoginFragmentBinding = LoginFragmentBinding.bind(fgmView)
+        binding = LoginFragmentBinding.bind(fgmView)
 
-        // Specify the current activity as the lifecycle owner.
+        // Specify the current fragment as the lifecycle owner.
         binding.lifecycleOwner = this
 
         // Assign the component to a property in the binding class.
@@ -58,12 +57,35 @@ class LoginFragment : BaseFragment() {
     }
 
     private fun initializeUI() {
-        viewModel.hideKeyboardSafeLiveEvent.observe(this, Observer {
+
+        //Version I : using DataBinding Library and LiveData to send the event in the ViewModel
+        //            then use LiveData observe() to subscribe to notifications from LiveData for ViewModel to View
+        //            communication
+
+//        viewModel.hideKeyboardSafeLiveEvent.observe(this, Observer {
+//            hideKeyboardSafe()
+//            viewModel.viewModelScope.launch {
+//                viewModel.onLoginButtonClickContinuation()
+//            }
+//        })
+
+
+        // Version II : using Kotlin Synthetics to access the UI elements from code behind
+//        loginButton.setOnClickListener {
+//            hideKeyboardSafe()
+//            viewModel.viewModelScope.launch {
+//                viewModel.onLoginButtonClickContinuation()
+//            }
+//        }
+
+
+        // Version III: using DataBinding Library to access the UI elements from code behind
+        binding.loginButton.setOnClickListener {
             hideKeyboardSafe()
             viewModel.viewModelScope.launch {
                 viewModel.onLoginButtonClickContinuation()
             }
-        })
+        }
 
         val loginItemList = mutableListOf(
             LoginFormItemModel(requireContext().getString(R.string.username)),
