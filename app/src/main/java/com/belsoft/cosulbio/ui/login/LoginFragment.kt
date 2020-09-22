@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.belsoft.cosulbio.BaseFragment
@@ -62,12 +63,12 @@ class LoginFragment : BaseFragment() {
         //            then use LiveData observe() to subscribe to notifications from LiveData for ViewModel to View
         //            communication
 
-//        viewModel.hideKeyboardSafeLiveEvent.observe(this, Observer {
-//            hideKeyboardSafe()
-//            viewModel.viewModelScope.launch {
-//                viewModel.onLoginButtonClickContinuation()
-//            }
-//        })
+        viewModel.hideKeyboardSafeLiveEvent.observe(this, Observer {
+            hideKeyboardSafe()
+            viewModel.viewModelScope.launch {
+                viewModel.onLoginButtonClickContinuation()
+            }
+        })
 
 
         // Version II : using Kotlin Synthetics to access the UI elements from code behind
@@ -80,12 +81,12 @@ class LoginFragment : BaseFragment() {
 
 
         // Version III: using DataBinding Library to access the UI elements from code behind
-        binding.loginButton.setOnClickListener {
-            hideKeyboardSafe()
-            viewModel.viewModelScope.launch {
-                viewModel.onLoginButtonClickContinuation()
-            }
-        }
+//        binding.loginButton.setOnClickListener {
+//            hideKeyboardSafe()
+//            viewModel.viewModelScope.launch {
+//                viewModel.onLoginButtonClickContinuation()
+//            }
+//        }
 
         val loginItemList = mutableListOf(
             LoginFormItemModel(requireContext().getString(R.string.username)),
