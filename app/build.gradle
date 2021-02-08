@@ -4,8 +4,6 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    def buildNumber = "1"
-    def separator = "."
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
@@ -13,11 +11,13 @@ android {
         applicationId "com.belsoft.cosulbio"
         minSdkVersion 21
         targetSdkVersion 29
+
+        //versionCode is in fact the buildNumber
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        def apkName = "CosulBio-" + versionName + separator + buildNumber
+        def apkName = "CosulBio-" + versionName + "." + versionCode
         setProperty("archivesBaseName", apkName)
         vectorDrawables.useSupportLibrary = true
 
