@@ -99,7 +99,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <ProgressBar
                 android:id="@+id/progressBar"

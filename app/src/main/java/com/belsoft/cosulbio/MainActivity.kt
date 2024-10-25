@@ -6,36 +6,31 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.navigation.NavigationView
+import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.widget.Toolbar
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import com.belsoft.cosulbio.databinding.ActivityMainBinding
-import com.belsoft.cosulbio.interfaces.IRootView
 import com.belsoft.cosulbio.utils.InjectorUtils
-import kotlinx.android.synthetic.main.content_main.*
-import kotlinx.android.synthetic.main.login_fragment.*
-import kotlinx.android.synthetic.main.nav_header_main.*
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 
-class MainActivity : BaseActivity(), IRootView {
+class MainActivity : BaseActivity() {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    override lateinit var rootView: ViewGroup
+    private lateinit var binding: ActivityMainBinding
     lateinit var viewModel: MainViewModel
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     companion object {
         lateinit var isKeyboardOnScreen: () -> Boolean
@@ -47,32 +42,19 @@ class MainActivity : BaseActivity(), IRootView {
         setTheme(R.style.AppTheme_NoActionBar)
         super.onCreate(savedInstanceState)
         setArchitectureComponents()
+        setCompanionObjectMembers()
+        setGlobalObservers()
         setActivityComponents()
+        setViewModelData()
+    }
 
-        rootView = rootLayout
-        isKeyboardOnScreen = {
-            val r = Rect()
-            rootView.getWindowVisibleDisplayFrame(r)
-            val heightDiff = rootView.rootView.height - (r.bottom - r.top)
-            heightDiff > rootView.rootView.height / 4
-        }
+    private fun setViewModelData() {
+        viewModel.getUsersFromDb()
+    }
 
-        hideSoftKeyboard = { view: View ->
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-        }
-
-        showSoftKeyboard = { view: View ->
-            val hasFocus =  if (view.hasFocus()) true else view.requestFocus()
-            if (hasFocus) {
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
-            }
-        }
-
+    private fun setGlobalObservers() {
         //SingleEvent received from ViewModel
         viewModel.toastMessage.observe(this, Observer { message ->
-            // Update the cached copy of the words in the adapter.
             message?.let {
                 displayToastMessage(this, resources.getString(it))
             }
@@ -80,7 +62,6 @@ class MainActivity : BaseActivity(), IRootView {
 
         //SingleEvent received from ViewModel
         viewModel.toastMessageString.observe(this, Observer { message ->
-            // Update the cached copy of the words in the adapter.
             message?.let {
                 displayToastMessage(this, it)
             }
@@ -91,12 +72,35 @@ class MainActivity : BaseActivity(), IRootView {
             displayToastMessage(this, "singleLiveEvent")
         })
 
-        viewModel.navigateLiveEvent.observe(this, Observer {id ->
+        viewModel.navigateLiveEvent.observe(this, Observer { id ->
             id?.let {
                 val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
                 navController.navigate(id)
             }
         })
+    }
+
+    private fun setCompanionObjectMembers() {
+        val rootView = binding.root
+        isKeyboardOnScreen = {
+            val r = Rect()
+            rootView.getWindowVisibleDisplayFrame(r)
+            val heightDiff = rootView.rootView.height - (r.bottom - r.top)
+            heightDiff > rootView.rootView.height / 4
+        }
+
+        hideSoftKeyboard = { view: View ->
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+        }
+
+        showSoftKeyboard = { view: View ->
+            val hasFocus = if (view.hasFocus()) true else view.requestFocus()
+            if (hasFocus) {
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+            }
+        }
     }
 
     private fun setArchitectureComponents() {
@@ -105,23 +109,16 @@ class MainActivity : BaseActivity(), IRootView {
         val factory = InjectorUtils.getInstance(applicationContext).provideMainViewModelFactory()
 
         // Obtain the ViewModel component.
-        viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
 
         // Inflate view and obtain an instance of the binding class.
-        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         // Specify the current activity as the lifecycle owner.
         binding.lifecycleOwner = this
 
         // Assign the component to a property in the binding class.
         binding.viewmodel = viewModel
-    }
-
-    private fun displayToastMessage(context: Context, message: String) {
-        val toast = Toast.makeText(context, message, Toast.LENGTH_LONG)
-        toast.setGravity(Gravity.CENTER,0, 0)
-        toast.view.textAlignment = View.TEXT_ALIGNMENT_CENTER
-        toast.show()
     }
 
     private fun setActivityComponents() {
@@ -181,5 +178,12 @@ class MainActivity : BaseActivity(), IRootView {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private fun displayToastMessage(context: Context, message: String) {
+        val toast = Toast.makeText(context, message, Toast.LENGTH_LONG)
+        toast.setGravity(Gravity.CENTER,0, 0)
+        toast.view.textAlignment = View.TEXT_ALIGNMENT_CENTER
+        toast.show()
     }
 }

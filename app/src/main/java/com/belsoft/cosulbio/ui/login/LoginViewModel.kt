@@ -20,7 +20,7 @@ class LoginViewModel(private val _mainViewModel: MainViewModel,
 
     val hideKeyboardSafeLiveEvent = SingleLiveEvent<Unit>()
 
-    val isLoginButtonEnabled = MutableLiveData<Boolean>().apply { value = false }
+    val isLoginButtonEnabled = MutableLiveData<Boolean>().apply { value = null }
 
     var loginList = listOf<LoginFormItemModel>()
     val logins = MutableLiveData<List<LoginFormItemModel>>().apply { value = loginList }
@@ -42,7 +42,7 @@ class LoginViewModel(private val _mainViewModel: MainViewModel,
             requestHelper.login(loginList[0].value, loginList[1].value)
         }
 
-        _mainViewModel.userInfo.value = user
+        _mainViewModel.userInfo.value = null
 //        _mainViewModel.toastMessageString.value = user.toString()
         user?.let {
             val id = withContext(Dispatchers.IO) {

@@ -16,18 +16,7 @@ import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 
 class MainViewModel(private val dbRepository : IDbRepository,
-                    private val requestHelper : IRequestHelper,
-                    private val appContext: Context) : BaseViewModel() {
-    init {
-        viewModelScope.launch {
-            val users = withContext(Dispatchers.IO){
-                dbRepository.getUsers()
-            }
-            if (users.isNotEmpty()){
-                userInfo.value = users[0]
-            }
-        }
-    }
+                    private val requestHelper : IRequestHelper) : BaseViewModel() {
 
     val singleLiveEvent = SingleLiveEvent<Unit>()
     val navigateLiveEvent = SingleLiveEvent<Int>()
@@ -41,4 +30,15 @@ class MainViewModel(private val dbRepository : IDbRepository,
     }
 
     val allProducts = MutableLiveData<List<Product>>().apply { value = listOf() }
+
+    fun getUsersFromDb() {
+        viewModelScope.launch {
+            val users = withContext(Dispatchers.IO){
+                dbRepository.getUsers()
+            }
+            if (users.isNotEmpty()){
+                userInfo.value = users[0]
+            }
+        }
+    }
 }
