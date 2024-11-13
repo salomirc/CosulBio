@@ -183,7 +183,6 @@ class MainActivity : BaseActivity() {
     private fun displayToastMessage(context: Context, message: String) {
         val toast = Toast.makeText(context, message, Toast.LENGTH_LONG)
         toast.setGravity(Gravity.CENTER,0, 0)
-        toast.view.textAlignment = View.TEXT_ALIGNMENT_CENTER
         toast.show()
     }
 }
